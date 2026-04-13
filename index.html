@@ -247,7 +247,7 @@ body{
 .video-box{
   position:relative;
   height:380px;border-radius:14px;
-  background:linear-gradient(135deg,#1a0000,#000);
+  background:linear-gradient(135deg,#050505,#000);
   border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:16px;
@@ -255,8 +255,8 @@ body{
   transition:.3s;
 }
 .video-box::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(ellipse at center,rgba(230,48,48,.15),transparent 65%);
+  background:radial-gradient(ellipse at center,rgba(230,48,48,.05),transparent 75%);
+}
 }
 .video-box:hover{border-color:rgba(230,48,48,.3)}
 .video-box:hover .play-btn{transform:scale(1.1)}
@@ -1066,8 +1066,7 @@ function startFlow(){
     motionVideo.classList.add("show");
     motionVideo.play();
 
-    motionVideo.onended = () => {
-      motionVideo.style.display = "none";
+    
 
       finalVideo.style.display = "block";
       finalVideo.classList.add("show");
