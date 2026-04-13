@@ -247,7 +247,7 @@ body{
 .video-box{
   position:relative;
   height:380px;border-radius:14px;
-  background:linear-gradient(135deg,#050505,#000);
+  background:linear-gradient(135deg,#1a0000,#000);
   border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:16px;
@@ -255,8 +255,8 @@ body{
   transition:.3s;
 }
 .video-box::before{
-  background:radial-gradient(ellipse at center,rgba(230,48,48,.05),transparent 75%);
-}
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(230,48,48,.15),transparent 65%);
 }
 .video-box:hover{border-color:rgba(230,48,48,.3)}
 .video-box:hover .play-btn{transform:scale(1.1)}
@@ -587,37 +587,6 @@ footer{
   .cta-bar{flex-direction:column;text-align:center}
   .hero h1{font-size:clamp(56px,14vw,90px)}
 }
-
-  .fade-out{
-  opacity:0;
-  transform:scale(0.95);
-  transition:0.5s ease;
-}
-
-video{
-  opacity:0;
-  transition:0.6s ease;
-}
-
-video.show{
-  opacity:1;
-}
-
-  #motionThumb{
-  z-index:2;
-}
-
-#motionPlay{
-  z-index:3;
-  position:absolute;
-}
-
-.fade-out{
-  opacity:0;
-  transform:scale(0.9);
-  filter:blur(6px);
-  transition:0.5s ease;
-}
 </style>
 </head>
 <body>
@@ -726,36 +695,19 @@ video.show{
     </div>
   </div>
 
-<div id="motion" class="tab-content">
-
-  <div class="video-box" id="motionFlow">
-
-    <!-- Thumbnail -->
-    <img src="images/poster.webp" id="motionThumb"
-         style="position:absolute;width:100%;height:100%;object-fit:cover;border-radius:14px;">
-
-    <!-- Play Button -->
-    <div class="play-btn" id="motionPlay">
-      <svg width="26" height="26" fill="white" viewBox="0 0 24 24">
-        <polygon points="5,3 19,12 5,21"/>
-      </svg>
+  <div id="motion" class="tab-content">
+    <div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#000;max-width:100%">
+      <video id="motionVideo" style="width:100%;display:block;max-height:480px">
+        <source src="mg.webm" type="video/webm">
+        <source src="mg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" onclick="document.getElementById('motionVideo').play();">
+        <svg width="26" height="26" fill="white" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
     </div>
-
-    <!-- Motion Graphics -->
-   <video id="motionVideo" style="width:100%;display:none;border-radius:14px;" muted playsinline>
-      <source src="mg.webm" type="video/webm">
-    </video>
-
-    <!-- Final Video -->
-    <video id="finalVideo" style="width:100%;display:none;border-radius:14px;" muted loop>
-      <source src="video.webm" type="video/webm">
-    </video>
-
+    <p style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center">Rating Card — DaVinci Resolve Fusion</p>
   </div>
-
-</div>
-  
-      
 </section>
 
 <!-- SERVICES -->
@@ -1049,39 +1001,15 @@ const barObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.fill').forEach(el => barObs.observe(el));
 
 // Motion video play button
-const thumb = document.getElementById("motionThumb");
-const playBtn = document.getElementById("motionPlay");
-const motionVideo = document.getElementById("motionVideo");
-const finalVideo = document.getElementById("finalVideo");
-
-function startFlow(){
-  thumb.classList.add("fade-out");
-  playBtn.classList.add("fade-out");
-
-  setTimeout(() => {
-    thumb.style.display = "none";
-    playBtn.style.display = "none";
-
-    motionVideo.style.display = "block";
-    motionVideo.classList.add("show");
-    motionVideo.play();
-
-    
-
-      finalVideo.style.display = "block";
-      finalVideo.classList.add("show");
-      finalVideo.play();
-    };
-
-  }, 500);
-}
-
-thumb.addEventListener("click", startFlow);
-playBtn.addEventListener("click", startFlow);
-
-  finalVideo.addEventListener("click", () => {
-  finalVideo.currentTime = 0;
-  finalVideo.play();
+document.getElementById('motionVideo').addEventListener('play', () => {
+  document.getElementById('motionVideo').controls = true;
+  document.querySelector('#motion .play-btn').style.display = 'none';
+});
+document.getElementById('motionVideo').addEventListener('pause', () => {
+  document.querySelector('#motion .play-btn').style.display = 'flex';
+});
+document.getElementById('motionVideo').addEventListener('ended', () => {
+  document.querySelector('#motion .play-btn').style.display = 'flex';
 });
 
 </script>
