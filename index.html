@@ -1,1017 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SN World — Video Editor & Motion Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-:root{
-  --red:#e63030;
-  --red2:#ff5500;
-  --bg:#060606;
-  --bg2:#0d0d0d;
-  --bg3:#111;
-  --border:#1a1a1a;
-  --text:#fff;
-  --muted:#888;
-  --dim:#444;
-}
-
-html{scroll-behavior:smooth}
-
-body{
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-}
-
-/* ── NAV ── */
-.nav{
-  position:fixed;top:0;width:100%;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 60px;
-  background:rgba(6,6,6,.85);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid transparent;
-  z-index:100;
-  transition:.3s;
-}
-.nav.scrolled{border-bottom-color:var(--border)}
-
-.logo{
-  display:flex;align-items:center;gap:10px;
-  font-weight:800;font-size:18px;letter-spacing:1px;
-  text-decoration:none;color:#fff;
-}
-.logo-dot{
-  width:10px;height:10px;
-  background:var(--red);border-radius:3px;
-}
-.logo span{color:var(--red)}
-
-.nav-links{display:flex;align-items:center;gap:30px}
-.nav-links a{
-  font-size:11px;color:var(--muted);
-  text-decoration:none;letter-spacing:2px;
-  text-transform:uppercase;transition:.2s;
-}
-.nav-links a:hover{color:#fff}
-.hire-btn{
-  background:var(--red);color:#fff;border:none;
-  padding:10px 20px;border-radius:6px;
-  font-size:11px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;cursor:pointer;
-  transition:.2s;text-decoration:none;
-}
-.hire-btn:hover{background:#c92a2a}
-
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:.3s}
-
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  text-align:center;
-  position:relative;
-  padding:120px 20px 80px;
-}
-
-.hero-bg{
-  position:absolute;inset:0;overflow:hidden;
-}
-.hero-bg::before{
-  content:"";position:absolute;
-  top:-100px;left:50%;transform:translateX(-50%);
-  width:800px;height:700px;
-  background:radial-gradient(ellipse,rgba(230,48,48,.18) 0%,transparent 70%);
-  filter:blur(40px);
-}
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-  background-size:55px 55px;
-}
-.hero-fade{
-  position:absolute;bottom:0;left:0;right:0;
-  height:200px;
-  background:linear-gradient(to bottom,transparent,var(--bg));
-}
-
-.hero-inner{
-  position:relative;z-index:2;
-  max-width:860px;
-}
-
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid rgba(230,48,48,.3);
-  background:rgba(230,48,48,.06);
-  padding:7px 16px;border-radius:30px;
-  font-size:10px;font-weight:600;letter-spacing:3px;
-  color:var(--red);text-transform:uppercase;
-  margin-bottom:28px;
-}
-.badge-dot{
-  width:7px;height:7px;
-  background:var(--red);border-radius:50%;
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
-.hero h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(70px,10vw,130px);
-  line-height:1;
-  letter-spacing:2px;
-  margin-bottom:20px;
-}
-.hero h1 .grad{
-  background:linear-gradient(90deg,var(--red),var(--red2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
-.hero-sub{
-  font-size:15px;color:#bbb;
-  letter-spacing:1px;margin-bottom:8px;
-}
-.hero-desc{
-  font-size:14px;color:var(--muted);
-  max-width:500px;margin:0 auto 36px;line-height:1.7;
-}
-
-.cta-row{
-  display:flex;align-items:center;justify-content:center;
-  gap:12px;flex-wrap:wrap;margin-bottom:60px;
-}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--red);color:#fff;
-  padding:14px 28px;border-radius:6px;
-  font-size:11px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;text-decoration:none;
-  border:none;cursor:pointer;transition:.2s;
-}
-.btn-primary:hover{background:#c92a2a;transform:translateY(-1px)}
-.btn-outline{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid #2a2a2a;color:#aaa;
-  padding:14px 28px;border-radius:6px;
-  font-size:11px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;text-decoration:none;
-  background:transparent;cursor:pointer;transition:.2s;
-}
-.btn-outline:hover{border-color:#444;color:#fff}
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:6px;
-  color:var(--muted);background:none;border:none;
-  font-size:11px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;cursor:pointer;transition:.2s;
-  text-decoration:none;
-}
-.btn-ghost:hover{color:#fff}
-.btn-ghost svg{transition:.2s}
-.btn-ghost:hover svg{transform:translateY(3px)}
-
-.stats{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-  background:var(--border);gap:1px;
-}
-.stat{
-  background:var(--bg2);
-  padding:22px 16px;text-align:center;
-  transition:.2s;
-}
-.stat:hover{background:var(--bg3)}
-.stat h2{
-  font-size:32px;font-weight:900;
-  transition:.2s;
-}
-.stat:hover h2{color:var(--red)}
-.stat p{
-  font-size:9px;color:var(--muted);
-  letter-spacing:2px;text-transform:uppercase;
-  margin-top:4px;
-}
-
-/* ── SECTION BASE ── */
-.section{
-  max-width:1140px;
-  margin:0 auto;
-  padding:100px 40px;
-}
-.section-label{
-  font-size:10px;color:var(--red);
-  letter-spacing:4px;text-transform:uppercase;
-  font-weight:700;margin-bottom:10px;
-}
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(40px,5vw,60px);
-  letter-spacing:2px;margin-bottom:10px;
-}
-.section-desc{
-  color:var(--muted);font-size:15px;
-  max-width:500px;line-height:1.7;
-  margin-bottom:50px;
-}
-
-/* ── WORK ── */
-.tabs{
-  display:flex;gap:0;
-  border-bottom:1px solid var(--border);
-  margin-bottom:40px;
-}
-.tab{
-  display:flex;align-items:center;gap:8px;
-  padding:12px 20px;
-  font-size:11px;font-weight:600;letter-spacing:2px;
-  text-transform:uppercase;color:var(--muted);
-  cursor:pointer;border-bottom:2px solid transparent;
-  margin-bottom:-1px;transition:.2s;background:none;border-top:none;border-left:none;border-right:none;
-}
-.tab:hover{color:#ccc}
-.tab.active{color:var(--red);border-bottom-color:var(--red)}
-
-.tab-content{display:none}
-.tab-content.active{display:block}
-
-.video-box{
-  position:relative;
-  height:380px;border-radius:14px;
-  background:linear-gradient(135deg,#1a0000,#000);
-  border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:16px;
-  cursor:pointer;overflow:hidden;
-  transition:.3s;
-}
-.video-box::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(ellipse at center,rgba(230,48,48,.15),transparent 65%);
-}
-.video-box:hover{border-color:rgba(230,48,48,.3)}
-.video-box:hover .play-btn{transform:scale(1.1)}
-
-.play-btn{
-  width:72px;height:72px;
-  background:var(--red);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 50px rgba(230,48,48,.5);
-  transition:.3s;z-index:1;
-}
-.play-btn svg{margin-left:4px}
-
-.video-label{
-  z-index:1;text-align:center;
-}
-.video-label p{font-weight:700;font-size:18px}
-.video-label span{color:var(--muted);font-size:13px}
-
-.thumb-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:16px;
-}
-.thumb-card{
-  position:relative;
-  aspect-ratio:16/9;
-  border-radius:10px;overflow:hidden;
-  border:1px solid var(--border);
-  background:var(--bg2);
-  cursor:pointer;
-  transition:.3s;
-}
-.thumb-card:hover{border-color:rgba(230,48,48,.3);transform:scale(1.02)}
-.thumb-card img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb-card .thumb-placeholder{
-  width:100%;height:100%;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:8px;
-}
-.thumb-card .thumb-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,.8),transparent);
-  display:flex;align-items:flex-end;padding:14px;
-  opacity:0;transition:.3s;
-}
-.thumb-card:hover .thumb-overlay{opacity:1}
-.thumb-card .thumb-info p{font-size:13px;font-weight:600}
-.thumb-card .thumb-info span{font-size:11px;color:var(--muted)}
-
-/* ── SERVICES ── */
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:16px;
-  margin-bottom:24px;
-}
-.service-card{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;padding:28px;
-  position:relative;overflow:hidden;
-  transition:.4s;cursor:default;
-}
-.service-card:hover{
-  border-color:rgba(230,48,48,.25);
-  background:#0f0f0f;
-}
-.service-card::after{
-  content:"";position:absolute;
-  bottom:0;left:0;right:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(230,48,48,.3),transparent);
-  opacity:0;transition:.4s;
-}
-.service-card:hover::after{opacity:1}
-
-.svc-icon{
-  width:46px;height:46px;
-  background:rgba(230,48,48,.1);
-  border:1px solid rgba(230,48,48,.2);
-  border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;
-  transition:.3s;
-}
-.service-card:hover .svc-icon{background:rgba(230,48,48,.2)}
-.svc-icon svg{color:var(--red)}
-
-.service-card h3{
-  font-size:17px;font-weight:700;
-  margin-bottom:10px;
-}
-.service-card p{
-  font-size:13px;color:var(--muted);
-  line-height:1.7;margin-bottom:16px;
-}
-.svc-tags{display:flex;flex-wrap:wrap;gap:6px}
-.svc-tag{
-  padding:4px 10px;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--border);
-  border-radius:20px;
-  font-size:10px;color:var(--dim);
-  letter-spacing:1px;text-transform:uppercase;
-}
-
-.cta-bar{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:32px 40px;
-  display:flex;align-items:center;
-  justify-content:space-between;gap:20px;
-  flex-wrap:wrap;
-}
-.cta-bar h3{font-size:22px;font-weight:800;margin-bottom:4px}
-.cta-bar p{color:var(--muted);font-size:14px}
-
-/* ── SKILLS ── */
-.skills-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:60px;
-}
-.skill-item{margin-bottom:28px}
-.skill-head{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-bottom:6px;
-}
-.skill-name{font-weight:600;font-size:14px}
-.skill-cat{
-  font-size:10px;color:var(--muted);
-  letter-spacing:2px;text-transform:uppercase;
-  margin-left:10px;
-}
-.skill-pct{
-  font-size:13px;font-weight:700;color:var(--red);
-}
-.bar{
-  height:4px;background:rgba(255,255,255,.06);
-  border-radius:10px;overflow:hidden;
-}
-.fill{
-  height:100%;
-  background:linear-gradient(90deg,#c92a2a,var(--red));
-  width:0;border-radius:10px;
-  transition:1.2s cubic-bezier(.4,0,.2,1);
-}
-.skill-desc{
-  font-size:12px;color:var(--dim);margin-top:5px;
-}
-
-.spec-title{
-  font-size:13px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:16px;
-}
-.spec-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
-.spec-tag{
-  padding:8px 14px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.025);
-  border-radius:10px;
-  font-size:12px;color:#aaa;
-  transition:.2s;cursor:default;
-}
-.spec-tag:hover{border-color:rgba(230,48,48,.3);color:#fff;background:rgba(230,48,48,.05)}
-
-.lang-box{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;padding:24px;
-}
-.lang-title{
-  font-size:13px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:20px;
-}
-.lang-item{
-  display:flex;align-items:center;gap:14px;
-  margin-bottom:18px;
-}
-.lang-item:last-child{margin-bottom:0}
-.lang-flag{
-  width:38px;height:38px;
-  background:rgba(230,48,48,.1);
-  border:1px solid rgba(230,48,48,.2);
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:800;color:var(--red);
-  flex-shrink:0;
-}
-.lang-info{flex:1}
-.lang-row{
-  display:flex;justify-content:space-between;
-  align-items:center;margin-bottom:6px;
-}
-.lang-name{font-size:14px;font-weight:600}
-.lang-level{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.lang-line{height:1px;background:var(--border)}
-
-/* ── CONTACT ── */
-.contact-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:16px;margin-bottom:16px;
-}
-.contact-card{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;padding:30px;
-  text-decoration:none;color:#fff;
-  position:relative;overflow:hidden;
-  transition:.3s;
-}
-.contact-card:hover{
-  border-color:rgba(230,48,48,.25);
-  background:#0f0f0f;
-}
-.contact-icon{
-  width:52px;height:52px;
-  background:rgba(230,48,48,.1);
-  border:1px solid rgba(230,48,48,.2);
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;transition:.3s;
-}
-.contact-card:hover .contact-icon{background:rgba(230,48,48,.2)}
-.contact-card .c-label{
-  font-size:10px;color:var(--muted);
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;
-}
-.contact-card .c-val{font-size:17px;font-weight:700;margin-bottom:6px}
-.contact-card .c-desc{font-size:13px;color:var(--muted);margin-bottom:20px}
-.contact-btn{
-  display:inline-block;
-  background:var(--red);color:#fff;
-  padding:10px 18px;border-radius:6px;
-  font-size:10px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;transition:.2s;
-}
-.contact-card:hover .contact-btn{background:#c92a2a}
-
-.perks-box{
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:14px;padding:28px 32px;
-}
-.perks-head{
-  display:flex;align-items:center;gap:10px;
-  font-size:12px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;margin-bottom:20px;
-}
-.perks-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:12px;
-}
-.perk{
-  display:flex;align-items:center;gap:10px;
-  font-size:13px;color:#aaa;
-}
-.perk svg{flex-shrink:0;color:var(--red)}
-
-/* ── FOOTER ── */
-footer{
-  border-top:1px solid var(--border);
-  padding:28px 60px;
-  display:flex;align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;gap:16px;
-}
-.footer-brand{
-  display:flex;align-items:center;gap:10px;
-}
-.footer-logo{
-  width:32px;height:32px;
-  background:var(--red);border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-}
-.footer-name{font-weight:700;font-size:14px}
-.footer-name span{color:var(--red)}
-.footer-tagline{font-size:11px;color:var(--dim);margin-top:2px}
-.footer-links{display:flex;gap:20px}
-.footer-links a{
-  color:var(--dim);transition:.2s;
-  display:flex;align-items:center;
-}
-.footer-links a:hover{color:var(--red)}
-.footer-copy{
-  font-size:11px;color:var(--dim);
-  letter-spacing:1px;text-transform:uppercase;
-}
-
-/* ── ANIMATIONS ── */
-.fade-up{
-  opacity:1;transform:none;
-  transition:.7s cubic-bezier(.4,0,.2,1);
-}
-.fade-up.animate{opacity:0;transform:translateY(24px)}
-.fade-up.show{opacity:1;transform:none}
-
-/* ── MOBILE NAV ── */
-.mobile-nav{
-  display:none;
-  flex-direction:column;
-  background:#0a0a0a;
-  border-top:1px solid var(--border);
-  padding:20px 30px;gap:16px;
-}
-.mobile-nav.open{display:flex}
-.mobile-nav a{
-  font-size:13px;color:#aaa;text-decoration:none;
-  letter-spacing:2px;text-transform:uppercase;transition:.2s;
-}
-.mobile-nav a:hover{color:#fff}
-
-/* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .skills-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .perks-grid{grid-template-columns:1fr}
-}
-@media(max-width:768px){
-  .nav{padding:16px 24px}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  footer{padding:24px;flex-direction:column;text-align:center}
-  .section{padding:80px 24px}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .cta-bar{flex-direction:column;text-align:center}
-  .hero h1{font-size:clamp(56px,14vw,90px)}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SN World — Video Editor & Motion Designer</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
-<!-- NAV -->
-<nav class="nav" id="navbar">
-  <a href="#" class="logo"><span class="logo-dot"></span>SN <span>WORLD</span></a>
-  <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#services">Services</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
-    <a href="#contact" class="hire-btn">Hire Me</a>
-  </div>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-<div class="mobile-nav" id="mobile-nav">
-  <a href="#work" onclick="closeMobile()">Work</a>
-  <a href="#services" onclick="closeMobile()">Services</a>
-  <a href="#skills" onclick="closeMobile()">Skills</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
-  <a href="#contact" class="hire-btn" style="text-align:center" onclick="closeMobile()">Hire Me</a>
-</div>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-fade"></div>
-  <div class="hero-inner">
-    <div class="badge"><span class="badge-dot"></span>Available for Work</div>
-    <h1>Crafting<br><span class="grad">Cinematic</span><br>Visuals</h1>
-    <p class="hero-sub">Video Editor · Motion Graphics Designer · Thumbnail Artist</p>
-    <p class="hero-desc">Specializing in mature game content with a cinematic edge. DaVinci Resolve & Fusion — bringing your stories to life.</p>
-    <div class="cta-row">
-      <a href="#contact" class="btn-primary">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        Get in Touch
-      </a>
-      <a href="https://t.me/snworld01" target="_blank" class="btn-outline">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Telegram
-      </a>
-      <a href="#work" class="btn-ghost">
-        View Work
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/></svg>
-      </a>
+  <!-- NAV -->
+  <nav class="nav" id="navbar">
+    <a href="#" class="logo"><span class="logo-dot"></span>SN <span>WORLD</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="hire-btn">Hire Me</a>
     </div>
-    <div class="stats">
-      <div class="stat"><h2>7K+</h2><p>Subscribers</p></div>
-      <div class="stat"><h2>4M+</h2><p>Total Views</p></div>
-      <div class="stat"><h2>3+</h2><p>Years Active</p></div>
-      <div class="stat"><h2>20+</h2><p>Projects Done</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- WORK -->
-<section class="section" id="work">
-  <p class="section-label fade-up">Portfolio</p>
-  <h2 class="section-title fade-up">Work Samples</h2>
-  <p class="section-desc fade-up">A curated selection of video edits, thumbnails, and motion graphics — crafted for mature game content.</p>
-
-  <div class="tabs fade-up">
-    <button class="tab active" data-tab="thumb">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-      Thumbnails
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
     </button>
-    <button class="tab" data-tab="motion">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      Motion Graphics
-    </button>
-    <button class="tab" data-tab="video">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-      Video Editing
-    </button>
+  </nav>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#work" onclick="closeMobile()">Work</a>
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#skills" onclick="closeMobile()">Skills</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+    <a href="#contact" class="hire-btn" style="text-align:center" onclick="closeMobile()">Hire Me</a>
   </div>
 
-  <div id="video" class="tab-content fade-up">
-    <div class="video-box" id="mainVideoBox">
-      <div class="play-btn">
-        <svg width="26" height="26" fill="white" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-fade"></div>
+    <div class="hero-inner">
+      <div class="badge"><span class="badge-dot"></span>Available for Work</div>
+      <h1>Crafting<br><span class="grad">Cinematic</span><br>Visuals</h1>
+      <p class="hero-sub">Video Editor · Motion Graphics Designer · Thumbnail Artist</p>
+      <p class="hero-desc">Specializing in mature game content with a cinematic edge. DaVinci Resolve & Fusion —
+        bringing your stories to life.</p>
+      <div class="cta-row">
+        <a href="#contact" class="btn-primary">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" /></svg>
+          Get in Touch
+        </a>
+        <a href="https://t.me/snworld01" target="_blank" class="btn-outline">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+          Telegram
+        </a>
+        <a href="#work" class="btn-ghost">
+          View Work
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <polyline points="19,12 12,19 5,12" /></svg>
+        </a>
       </div>
-      <div class="video-label">
-        <p>Featured Edit Reel</p>
-        <span>Click to watch on YouTube</span>
-      </div>
-    </div>
-  </div>
-
-  <div id="thumb" class="tab-content active">
-    <div class="thumb-grid">
-      <div class="thumb-card">
-        <img src="images/th1.webp" alt="Thumbnail 1">
-        <div class="thumb-overlay">
-          <div class="thumb-info"><p>Visual Novel 2026</p><span>Thumbnail Design</span></div>
+      <div class="stats">
+        <div class="stat">
+          <h2>7K+</h2>
+          <p>Subscribers</p>
+        </div>
+        <div class="stat">
+          <h2>4M+</h2>
+          <p>Total Views</p>
+        </div>
+        <div class="stat">
+          <h2>3+</h2>
+          <p>Years Active</p>
+        </div>
+        <div class="stat">
+          <h2>20+</h2>
+          <p>Projects Done</p>
         </div>
       </div>
-      <div class="thumb-card">
-        <img src="images/th2.webp" alt="Thumbnail 2">
-        <div class="thumb-overlay">
-          <div class="thumb-info"><p>AI Girlfriend</p><span>Thumbnail Design</span></div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work">
+    <p class="section-label fade-up">Portfolio</p>
+    <h2 class="section-title fade-up">Work Samples</h2>
+    <p class="section-desc fade-up">A curated selection of video edits, thumbnails, and motion graphics — crafted for
+      mature game content.</p>
+
+    <div class="tabs fade-up">
+      <button class="tab active" data-tab="thumb">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21,15 16,10 5,21" /></svg>
+        Thumbnails
+      </button>
+      <button class="tab" data-tab="motion">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        Motion Graphics
+      </button>
+      <button class="tab" data-tab="video">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <polygon points="5,3 19,12 5,21" /></svg>
+        Video Editing
+      </button>
+    </div>
+
+    <div id="video" class="tab-content fade-up">
+      <div class="video-box" id="mainVideoBox">
+        <div class="play-btn">
+          <svg width="26" height="26" fill="white" viewBox="0 0 24 24">
+            <polygon points="5,3 19,12 5,21" /></svg>
+        </div>
+        <div class="video-label">
+          <p>Featured Edit Reel</p>
+          <span>Click to watch on YouTube</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="motion" class="tab-content">
-    <div style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#000;max-width:100%">
-      <video id="motionVideo" style="width:100%;display:block;max-height:480px">
-        <source src="mg.webm" type="video/webm">
-        <source src="mg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;" onclick="document.getElementById('motionVideo').play();">
-        <svg width="26" height="26" fill="white" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
-    </div>
-    <p style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center">Rating Card — DaVinci Resolve Fusion</p>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="section" id="services" style="padding-top:0">
-  <p class="section-label fade-up">What I Offer</p>
-  <h2 class="section-title fade-up">Services</h2>
-  <p class="section-desc fade-up">End-to-end creative production for mature game creators — from raw footage to polished, publish-ready content.</p>
-
-  <div class="services-grid">
-    <div class="service-card fade-up">
-      <div class="svc-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23,7 16,12 23,17"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      </div>
-      <h3>Video Editing</h3>
-      <p>Full-cycle editing for mature game content — cuts, pacing, SFX, and cinematic storytelling that keeps viewers engaged.</p>
-      <div class="svc-tags">
-        <span class="svc-tag">DaVinci Resolve</span>
-        <span class="svc-tag">Color Grading</span>
-        <span class="svc-tag">Pacing</span>
-        <span class="svc-tag">SFX</span>
-      </div>
-    </div>
-    <div class="service-card fade-up">
-      <div class="svc-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-      </div>
-      <h3>Motion Graphics</h3>
-      <p>Custom animations built in DaVinci Resolve Fusion. Intros, title cards, lower thirds, rating cards — all crafted to elevate your content.</p>
-      <div class="svc-tags">
-        <span class="svc-tag">Fusion</span>
-        <span class="svc-tag">Intro Animations</span>
-        <span class="svc-tag">Title Cards</span>
-        <span class="svc-tag">Lower Thirds</span>
-      </div>
-    </div>
-    <div class="service-card fade-up">
-      <div class="svc-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
-      </div>
-      <h3>Thumbnail Design</h3>
-      <p>High-CTR thumbnails that stand out in feeds. Bold composition, sharp typography, and AI-enhanced visuals tailored to your brand.</p>
-      <div class="svc-tags">
-        <span class="svc-tag">Photoshop</span>
-        <span class="svc-tag">Photopea</span>
-        <span class="svc-tag">AI Enhancement</span>
-        <span class="svc-tag">Brand Consistent</span>
-      </div>
-    </div>
-    <div class="service-card fade-up">
-      <div class="svc-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      </div>
-      <h3>Game Localization</h3>
-      <p>Native-quality localization across three languages. Preserving tone, nuance, and cultural context — not just literal translation.</p>
-      <div class="svc-tags">
-        <span class="svc-tag">English</span>
-        <span class="svc-tag">Hindi</span>
-        <span class="svc-tag">Bengali</span>
-        <span class="svc-tag">QA</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="cta-bar fade-up">
-    <div>
-      <h3>Ready to work together?</h3>
-      <p>Custom packages available. Let's discuss your project.</p>
-    </div>
-    <a href="#contact" class="btn-primary">Get a Quote</a>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section class="section" id="skills" style="padding-top:0">
-  <p class="section-label fade-up">Expertise</p>
-  <h2 class="section-title fade-up">Tools & Skills</h2>
-  <p class="section-desc fade-up">Industry-standard software paired with AI tools for a modern production workflow.</p>
-
-  <div class="skills-grid">
-    <div>
-      <div class="skill-item fade-up">
-        <div class="skill-head">
-          <div><span class="skill-name">DaVinci Resolve</span><span class="skill-cat">Video Editing</span></div>
-          <span class="skill-pct">75%</span>
-        </div>
-        <div class="bar"><div class="fill" data-w="75%"></div></div>
-        <p class="skill-desc">Professional editing, color, and audio post-production</p>
-      </div>
-      <div class="skill-item fade-up">
-        <div class="skill-head">
-          <div><span class="skill-name">Fusion</span><span class="skill-cat">Motion Graphics</span></div>
-          <span class="skill-pct">68%</span>
-        </div>
-        <div class="bar"><div class="fill" data-w="68%"></div></div>
-        <p class="skill-desc">Node-based compositing, VFX, and motion graphics</p>
-      </div>
-      <div class="skill-item fade-up">
-        <div class="skill-head">
-          <div><span class="skill-name">Photoshop / Photopea</span><span class="skill-cat">Design</span></div>
-          <span class="skill-pct">82%</span>
-        </div>
-        <div class="bar"><div class="fill" data-w="82%"></div></div>
-        <p class="skill-desc">Thumbnail creation, compositing, and retouching</p>
-      </div>
-      <div class="skill-item fade-up">
-        <div class="skill-head">
-          <div><span class="skill-name">AI Image Tools</span><span class="skill-cat">Generative AI</span></div>
-          <span class="skill-pct">80%</span>
-        </div>
-        <div class="bar"><div class="fill" data-w="80%"></div></div>
-        <p class="skill-desc">Asset enhancement, upscaling, and creative acceleration</p>
-      </div>
-      <div class="skill-item fade-up">
-        <div class="skill-head">
-          <div><span class="skill-name">HTML / CSS</span><span class="skill-cat">Web</span></div>
-          <span class="skill-pct">60%</span>
-        </div>
-        <div class="bar"><div class="fill" data-w="60%"></div></div>
-        <p class="skill-desc">Portfolio sites and basic web layouts</p>
-      </div>
-    </div>
-
-    <div>
-      <p class="spec-title fade-up">Specializations</p>
-      <div class="spec-tags fade-up">
-        <span class="spec-tag">Mature Game Content</span>
-        <span class="spec-tag">Cinematic Editing</span>
-        <span class="spec-tag">Storytelling Edits</span>
-        <span class="spec-tag">High-CTR Thumbnails</span>
-        <span class="spec-tag">Fusion Compositing</span>
-        <span class="spec-tag">Game Localization</span>
-        <span class="spec-tag">Compositing & VFX</span>
-        <span class="spec-tag">Color Grading</span>
-        <span class="spec-tag">Title Sequences</span>
-      </div>
-
-      <div class="lang-box fade-up">
-        <p class="lang-title">Languages</p>
-        <div class="lang-item">
-          <div class="lang-flag">EN</div>
-          <div class="lang-info">
-            <div class="lang-row"><span class="lang-name">English</span><span class="lang-level">Fluent</span></div>
-            <div class="lang-line"></div>
+    <div id="thumb" class="tab-content active">
+      <div class="thumb-grid">
+        <div class="thumb-card">
+          <img src="images/th1.webp" alt="Thumbnail 1">
+          <div class="thumb-overlay">
+            <div class="thumb-info">
+              <p>Visual Novel 2026</p><span>Thumbnail Design</span>
+            </div>
           </div>
         </div>
-        <div class="lang-item">
-          <div class="lang-flag">HI</div>
-          <div class="lang-info">
-            <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
-            <div class="lang-line"></div>
-          </div>
-        </div>
-        <div class="lang-item">
-          <div class="lang-flag">BN</div>
-          <div class="lang-info">
-            <div class="lang-row"><span class="lang-name">Bengali</span><span class="lang-level">Native</span></div>
-            <div class="lang-line"></div>
+        <div class="thumb-card">
+          <img src="images/th2.webp" alt="Thumbnail 2">
+          <div class="thumb-overlay">
+            <div class="thumb-info">
+              <p>AI Girlfriend</p><span>Thumbnail Design</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- CONTACT -->
-<section class="section" id="contact" style="padding-top:0">
-  <p class="section-label fade-up">Let's Collaborate</p>
-  <h2 class="section-title fade-up">Get in Touch</h2>
-  <p class="section-desc fade-up">Have a project in mind? Reach out via email or Telegram and let's build something cinematic together.</p>
+    <div id="motion" class="tab-content">
+      <div
+        style="position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#000;max-width:100%">
+        <video id="motionVideo" style="width:100%;display:block;max-height:480px" autoplay muted loop playsinline>
 
-  <div class="contact-grid">
-    <a href="mailto:snworld.work@gmail.com" class="contact-card fade-up">
-      <div class="contact-icon">
-        <svg width="22" height="22" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <source src="mg.webm" type="video/webm">
+          <source src="mg.mp4" type="video/mp4">
+
+          Your browser does not support the video tag.
+        </video>
+        <div class="play-btn" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;"
+          onclick="document.getElementById('motionVideo').play();">
+          <svg width="26" height="26" fill="white" viewBox="0 0 24 24">
+            <polygon points="5,3 19,12 5,21" /></svg>
+        </div>
       </div>
-      <p class="c-label">Email</p>
-      <p class="c-val"><span>snworld.work@gmail.com</span></p>
-      <p class="c-desc">Best for detailed project briefs and quotes</p>
-      <span class="contact-btn">Send Email</span>
-    </a>
-    <a href="https://t.me/snworld01" target="_blank" rel="noopener" class="contact-card fade-up">
-      <div class="contact-icon">
-        <svg width="22" height="22" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </div>
-      <p class="c-label">Telegram</p>
-      <p class="c-val">@snworld01</p>
-      <p class="c-desc">Fastest response — ideal for quick questions</p>
-      <span class="contact-btn">Open Telegram</span>
-    </a>
-  </div>
-
-  <div class="perks-box fade-up">
-    <div class="perks-head">
-      <svg width="16" height="16" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-      Working With Me
+      <p style="margin-top:12px;font-size:12px;color:var(--muted);text-align:center">Rating Card — DaVinci Resolve
+        Fusion</p>
     </div>
-    <div class="perks-grid">
-      <div class="perk">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
-        Fast turnaround on edits
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services" style="padding-top:0">
+    <p class="section-label fade-up">What I Offer</p>
+    <h2 class="section-title fade-up">Services</h2>
+    <p class="section-desc fade-up">End-to-end creative production for mature game creators — from raw footage to
+      polished, publish-ready content.</p>
+
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polygon points="23,7 16,12 23,17" />
+            <rect x="1" y="5" width="15" height="14" rx="2" /></svg>
+        </div>
+        <h3>Video Editing</h3>
+        <p>Full-cycle editing for mature game content — cuts, pacing, SFX, and cinematic storytelling that keeps viewers
+          engaged.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">DaVinci Resolve</span>
+          <span class="svc-tag">Color Grading</span>
+          <span class="svc-tag">Pacing</span>
+          <span class="svc-tag">SFX</span>
+        </div>
       </div>
-      <div class="perk">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
-        Open to long-term collaborations
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" /></svg>
+        </div>
+        <h3>Motion Graphics</h3>
+        <p>Custom animations built in DaVinci Resolve Fusion. Intros, title cards, lower thirds, rating cards — all
+          crafted to elevate your content.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Fusion</span>
+          <span class="svc-tag">Intro Animations</span>
+          <span class="svc-tag">Title Cards</span>
+          <span class="svc-tag">Lower Thirds</span>
+        </div>
       </div>
-      <div class="perk">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
-        NDA-friendly for mature content creators
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21,15 16,10 5,21" /></svg>
+        </div>
+        <h3>Thumbnail Design</h3>
+        <p>High-CTR thumbnails that stand out in feeds. Bold composition, sharp typography, and AI-enhanced visuals
+          tailored to your brand.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Photoshop</span>
+          <span class="svc-tag">Photopea</span>
+          <span class="svc-tag">AI Enhancement</span>
+          <span class="svc-tag">Brand Consistent</span>
+        </div>
       </div>
-      <div class="perk">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>
-        Revisions included
+      <div class="service-card fade-up">
+        <div class="svc-icon">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+        </div>
+        <h3>Game Localization</h3>
+        <p>Native-quality localization across three languages. Preserving tone, nuance, and cultural context — not just
+          literal translation.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">English</span>
+          <span class="svc-tag">Hindi</span>
+          <span class="svc-tag">Bengali</span>
+          <span class="svc-tag">QA</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-brand">
-    <div class="footer-logo">
-      <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+    <div class="cta-bar fade-up">
+      <div>
+        <h3>Ready to work together?</h3>
+        <p>Custom packages available. Let's discuss your project.</p>
+      </div>
+      <a href="#contact" class="btn-primary">Get a Quote</a>
     </div>
-    <div>
-      <div class="footer-name">SN <span>WORLD</span></div>
-      <div class="footer-tagline">Video Editor · Motion Designer · Thumbnail Artist</div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills" style="padding-top:0">
+    <p class="section-label fade-up">Expertise</p>
+    <h2 class="section-title fade-up">Tools & Skills</h2>
+    <p class="section-desc fade-up">Industry-standard software paired with AI tools for a modern production workflow.
+    </p>
+
+    <div class="skills-grid">
+      <div>
+        <div class="skill-item fade-up">
+          <div class="skill-head">
+            <div><span class="skill-name">DaVinci Resolve</span><span class="skill-cat">Video Editing</span></div>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="bar">
+            <div class="fill" data-w="75%"></div>
+          </div>
+          <p class="skill-desc">Professional editing, color, and audio post-production</p>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-head">
+            <div><span class="skill-name">Fusion</span><span class="skill-cat">Motion Graphics</span></div>
+            <span class="skill-pct">68%</span>
+          </div>
+          <div class="bar">
+            <div class="fill" data-w="68%"></div>
+          </div>
+          <p class="skill-desc">Node-based compositing, VFX, and motion graphics</p>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-head">
+            <div><span class="skill-name">Photoshop / Photopea</span><span class="skill-cat">Design</span></div>
+            <span class="skill-pct">82%</span>
+          </div>
+          <div class="bar">
+            <div class="fill" data-w="82%"></div>
+          </div>
+          <p class="skill-desc">Thumbnail creation, compositing, and retouching</p>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-head">
+            <div><span class="skill-name">AI Image Tools</span><span class="skill-cat">Generative AI</span></div>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="bar">
+            <div class="fill" data-w="80%"></div>
+          </div>
+          <p class="skill-desc">Asset enhancement, upscaling, and creative acceleration</p>
+        </div>
+        <div class="skill-item fade-up">
+          <div class="skill-head">
+            <div><span class="skill-name">HTML / CSS</span><span class="skill-cat">Web</span></div>
+            <span class="skill-pct">60%</span>
+          </div>
+          <div class="bar">
+            <div class="fill" data-w="60%"></div>
+          </div>
+          <p class="skill-desc">Portfolio sites and basic web layouts</p>
+        </div>
+      </div>
+
+      <div>
+        <p class="spec-title fade-up">Specializations</p>
+        <div class="spec-tags fade-up">
+          <span class="spec-tag">Mature Game Content</span>
+          <span class="spec-tag">Cinematic Editing</span>
+          <span class="spec-tag">Storytelling Edits</span>
+          <span class="spec-tag">High-CTR Thumbnails</span>
+          <span class="spec-tag">Fusion Compositing</span>
+          <span class="spec-tag">Game Localization</span>
+          <span class="spec-tag">Compositing & VFX</span>
+          <span class="spec-tag">Color Grading</span>
+          <span class="spec-tag">Title Sequences</span>
+        </div>
+
+        <div class="lang-box fade-up">
+          <p class="lang-title">Languages</p>
+          <div class="lang-item">
+            <div class="lang-flag">EN</div>
+            <div class="lang-info">
+              <div class="lang-row"><span class="lang-name">English</span><span class="lang-level">Fluent</span></div>
+              <div class="lang-line"></div>
+            </div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-flag">HI</div>
+            <div class="lang-info">
+              <div class="lang-row"><span class="lang-name">Hindi</span><span class="lang-level">Native</span></div>
+              <div class="lang-line"></div>
+            </div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-flag">BN</div>
+            <div class="lang-info">
+              <div class="lang-row"><span class="lang-name">Bengali</span><span class="lang-level">Native</span></div>
+              <div class="lang-line"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="footer-links">
-    <a href="mailto:snworld.work@gmail.com" aria-label="Email">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-    </a>
-    <a href="https://t.me/snworld01" target="_blank" rel="noopener" aria-label="Telegram">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    </a>
-  </div>
-  <p class="footer-copy">&copy; <span id="year"></span> SN World. All rights reserved.</p>
-</footer>
+  </section>
 
-<script>
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
+  <!-- CONTACT -->
+  <section class="section" id="contact" style="padding-top:0">
+    <p class="section-label fade-up">Let's Collaborate</p>
+    <h2 class="section-title fade-up">Get in Touch</h2>
+    <p class="section-desc fade-up">Have a project in mind? Reach out via email or Telegram and let's build something
+      cinematic together.</p>
 
-// Navbar scroll
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-});
+    <div class="contact-grid">
+      <a href="mailto:snworld.work@gmail.com" class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="22" height="22" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" /></svg>
+        </div>
+        <p class="c-label">Email</p>
+        <p class="c-val"><span>snworld.work@gmail.com</span></p>
+        <p class="c-desc">Best for detailed project briefs and quotes</p>
+        <span class="contact-btn">Send Email</span>
+      </a>
+      <a href="https://t.me/snworld01" target="_blank" rel="noopener" class="contact-card fade-up">
+        <div class="contact-icon">
+          <svg width="22" height="22" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+        </div>
+        <p class="c-label">Telegram</p>
+        <p class="c-val">@snworld01</p>
+        <p class="c-desc">Fastest response — ideal for quick questions</p>
+        <span class="contact-btn">Open Telegram</span>
+      </a>
+    </div>
 
-// Hamburger
-document.getElementById('hamburger').addEventListener('click', () => {
-  document.getElementById('mobile-nav').classList.toggle('open');
-});
-function closeMobile() {
-  document.getElementById('mobile-nav').classList.remove('open');
-}
+    <div class="perks-box fade-up">
+      <div class="perks-head">
+        <svg width="16" height="16" fill="none" stroke="#e63030" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12,6 12,12 16,14" /></svg>
+        Working With Me
+      </div>
+      <div class="perks-grid">
+        <div class="perk">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="20,6 9,17 4,12" /></svg>
+          Fast turnaround on edits
+        </div>
+        <div class="perk">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="20,6 9,17 4,12" /></svg>
+          Open to long-term collaborations
+        </div>
+        <div class="perk">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="20,6 9,17 4,12" /></svg>
+          NDA-friendly for mature content creators
+        </div>
+        <div class="perk">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="20,6 9,17 4,12" /></svg>
+          Revisions included
+        </div>
+      </div>
+    </div>
+  </section>
 
-// Tabs
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById(tab.dataset.tab).classList.add('active');
-  });
-});
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg width="14" height="14" fill="white" viewBox="0 0 24 24">
+          <polygon points="5,3 19,12 5,21" /></svg>
+      </div>
+      <div>
+        <div class="footer-name">SN <span>WORLD</span></div>
+        <div class="footer-tagline">Video Editor · Motion Designer · Thumbnail Artist</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:snworld.work@gmail.com" aria-label="Email">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+          <polyline points="22,6 12,13 2,6" /></svg>
+      </a>
+      <a href="https://t.me/snworld01" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+      </a>
+    </div>
+    <p class="footer-copy">&copy; <span id="year"></span> SN World. All rights reserved.</p>
+  </footer>
 
-// Video boxes — replace these URLs with your actual YouTube links
-document.getElementById('mainVideoBox').addEventListener('click', () => {
-  window.open('https://youtu.be/qrh3BvWi9Ug', '_blank');
-});
-
-
-// Card hover glow
-document.querySelectorAll('.service-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--x', (e.clientX - r.left) + 'px');
-    card.style.setProperty('--y', (e.clientY - r.top) + 'px');
-  });
-});
-
-// Skill bars animate on scroll
-const barObs = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.width = entry.target.dataset.w;
-      barObs.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll('.fill').forEach(el => barObs.observe(el));
-
-// Motion video play button
-document.getElementById('motionVideo').addEventListener('play', () => {
-  document.getElementById('motionVideo').controls = true;
-  document.querySelector('#motion .play-btn').style.display = 'none';
-});
-document.getElementById('motionVideo').addEventListener('pause', () => {
-  document.querySelector('#motion .play-btn').style.display = 'flex';
-});
-document.getElementById('motionVideo').addEventListener('ended', () => {
-  document.querySelector('#motion .play-btn').style.display = 'flex';
-});
-
-</script>
+  <script src="script.js"></script>
 </body>
+
 </html>
